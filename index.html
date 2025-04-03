@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Katherine's Budget Tracker</title>
+    <style>
+        body {
+            background-color: hotpink;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            padding: 50px;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            color: #00bfff;
+            font-size: 3.5rem;
+        }
+
+        .bunny-icon {
+            width: 80px;
+            height: auto;
+            margin: 0 10px;
+            vertical-align: middle;
+            filter: drop-shadow(0 0 12px #fff) drop-shadow(0 0 18px #ffb3ec);
+        }
+
+        .floating-egg {
+            position: absolute;
+            font-size: 50px;
+            animation: floatEgg 5s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.8;
+        }
+
+        .floating-bottom-left {
+            bottom: 40px;
+            left: 30px;
+        }
+
+        .floating-bottom-right {
+            bottom: 40px;
+            right: 30px;
+        }
+
+        @keyframes floatEgg {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+            100% { transform: translateY(0); }
+        }
+
+        .transaction-box,
+        .summary-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px dashed white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            color: white;
+        }
+
+        form input,
+        form select {
+            margin: 5px;
+            padding: 12px 18px;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffe6f0;
+            color: #333;
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: all 0.2s ease-in-out;
+        }
+
+        form input:focus,
+        form select:focus {
+            outline: none;
+            border-color: #ff66b2;
+            box-shadow: 0 0 10px #ffb3d9;
+        }
+
+        .income {
+            color: rgb(23, 7, 252);
+        }
+
+        .expense {
+            color: rgb(97, 10, 238);
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            color: rgb(44, 9, 243);
+        }
+
+        button {
+            background: linear-gradient(145deg, #ff66b2, #ff3399);
+            color: white;
+            font-size: 1.1rem;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            padding: 12px 24px;
+            border: 2px solid #00bfff;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin: 8px;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #ff3399, #cc0066);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: scale(0.97);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .sparkle-bunny {
+            display: inline-block;
+            animation: sparkle 2s infinite ease-in-out, bounce 1.5s infinite ease-in-out;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                text-shadow: 0 0 5px #fff, 0 0 10px #ff69b4, 0 0 15px #00bfff;
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff69b4, 0 0 40px #00bfff;
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bottom-floating cute chick eggs 🐣 -->
+    <span class="floating-egg floating-bottom-left">🐣</span>
+    <span class="floating-egg floating-bottom-right">🐣</span>
+
+    <!-- Header -->
+    <h1>
+        <span class="sparkle-bunny">
+            <img src="images/bunnies (2).jpg" alt="Cute Bunny" class="bunny-icon" />
+        </span>
+        Katherine's Budget Tracker
+        <span class="sparkle-bunny">
+            <img src="images/bunnies (2).jpg" alt="Cute Bunny" class="bunny-icon" />
+        </span>
+    </h1>
+
+    <!-- Form -->
+    <form id="transaction-form" class="transaction-box">
+        <h3>Add a New Transaction 🐇</h3>
+        <input type="number" id="amount" placeholder="💵 Amount" required />
+
+        <select id="category" required>
+            <option value="" disabled selected>Select Category 🧺</option>
+            <option value="Food">🍕 Food</option>
+            <option value="Rent">🏠 Rent</option>
+            <option value="Shopping">🛍️ Shopping</option>
+            <option value="Entertainment">🎮 Entertainment</option>
+            <option value="Transport">🚗 Transport</option>
+            <option value="Health">💊 Health</option>
+            <option value="Utilities">💡 Utilities</option>
+            <option value="Savings">🐷 Savings</option>
+            <option value="Other">✨ Other</option>
+        </select>
+
+        <select id="type" required>
+            <option value="income">📈 Income</option>
+            <option value="expense">📉 Expense</option>
+        </select>
+
+        <input type="date" id="date" required />
+
+        <div>
+            <button type="submit">💰 Add That Coin</button>
+            <button type="button" id="clear-btn">🧼 Clear All</button>
+            <button type="button" id="download-btn">📥 Download as Excel</button>
+        </div>
+    </form>
+
+    <!-- Transactions -->
+    <div id="transaction-list" class="transaction-box">
+        <h3>🐣 Final List of Transactions 🐣</h3>
+        <p>It’s like an Easter egg hunt... but for your wallet! Track your treasure, count your coins, and let the bunnies bounce with joy. 💖🐰💰</p>
+        <div id="transaction-output"></div>
+    </div>
+
+    <div id="summary" class="summary-box"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Girl, you're doin' just fine. 🐰💖</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
